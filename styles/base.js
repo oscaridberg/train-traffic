@@ -24,3 +24,11 @@ export const mapText = {
     paddingTop: 25,
     paddingLeft: 10
 }
+
+export const mapTextHidden = {
+    borderRadius: 12,
+    backgroundColor: '#121212',
+    top: '93%',
+    paddingTop: 25,
+    paddingLeft: 10
+}
