@@ -11,7 +11,7 @@ import Home from './components/Home.tsx';
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
-  "Inventory":      "home",
+  "Near you":      "map",
   "Pick Order":     "list",
   "Deliveries":     "cube",
   "Login":          "key",
@@ -36,7 +36,7 @@ export default function App() {
             })}
           >
 
-            <Tab.Screen name="Inventory" >
+            <Tab.Screen name="Near you" >
                 {() => <Home/>}
             </Tab.Screen>
 

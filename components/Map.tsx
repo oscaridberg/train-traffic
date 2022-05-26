@@ -2,14 +2,11 @@ import config from "../config/config.json";
 import { useState, useEffect } from 'react';
 import { ScrollView, Image, Text, View, StyleSheet } from 'react-native';
 import { Base, Typography } from '../styles/index.js';
-// import productModel from '../models/products.ts';
-// import keyboard from '../assets/keyboard.jpg';
-// import StockList from './StockList.tsx';
 import MapView, { Marker } from 'react-native-maps';
 import getCoordinates from '../models/nominatim.ts';
 import * as Location from 'expo-location';
 import delayModel from '../models/delays.ts';
-
+import DelayList from './DelayList.tsx';
 
 export default function Map():Object {
     const [position, setPosition] = useState({});
@@ -17,7 +14,6 @@ export default function Map():Object {
     const [delays, setDelays] = useState([]);
     const [marker, setMarker] = useState([]);
     const [locationMarker, setLocationMarker] = useState(null);
-    const markers = [];
 
     useEffect(() => {
         const fetchPosition = async () => {
@@ -44,7 +40,7 @@ export default function Map():Object {
                     latitude: currentLocation.coords.latitude,
                     longitude: currentLocation.coords.longitude
                 }}
-                title="Min plats"
+                title="My location"
                 pinColor="blue"
             />);
         };
@@ -60,6 +56,7 @@ export default function Map():Object {
                 markers.push(
                     {
                     name: delays[i].name,
+                    expected: delays[i].expected,
                     latitude: parseFloat(delays[i].location[1]),
                     longitude: parseFloat(delays[i].location[0])
                 })
@@ -68,7 +65,6 @@ export default function Map():Object {
         }
 
     }, [delays]);
-
     return (
         <View style={Base.container}>
             <MapView
@@ -89,15 +85,16 @@ export default function Map():Object {
                             longitude: m.longitude
                         }}
                         title={m.name}
+                        description={m.expected}
                         key={index}
                     />
                 ))}
                 {locationMarker}
             </MapView>
 
-            <ScrollView style={isPress? Base.mapTextHidden : Base.mapText}>
-                <Text style={Base.infoTitle}>Delays near you:</Text>
-            </ScrollView>
+            <View style={isPress? Base.delayViewHidden : Base.delayView}>
+                <DelayList delays={delays.slice(0,9)}/>
+            </View>
         </View>
     );
 }

@@ -19,6 +19,7 @@ const delayModel = {
         const stations = await delayModel.getStations();
 
         const matches = [];
+        console.log(delays);
 
         if (userData) {
             for (let i = 0; i < stations.length; i++) {
@@ -29,8 +30,8 @@ const delayModel = {
                             matches.push({
                                 name: stations[i].AdvertisedLocationName,
                                 location: delayModel.getCoordinates(stations[i].Geometry.WGS84),
-                                advertised: delays[j].AdvertisedTimeAtLocation,
-                                expected: delays[j].EstimatedTimeAtLocation,
+                                advertised: delayModel.getTime(delays[j].AdvertisedTimeAtLocation),
+                                expected: delayModel.getTime(delays[j].EstimatedTimeAtLocation),
                                 isCanceled: delays[j].Canceled,
                                 destination: delayModel.getLocationName(stations, delays[j].ToLocation[0].LocationName),
                                 proximity2User: delayModel.getProximity(userData, delayModel.getCoordinates(stations[i].Geometry.WGS84))
@@ -98,6 +99,12 @@ const delayModel = {
     sortClosestStations: function sortClosestStations(stations: array): array {
         return stations.sort((a, b) => (a.proximity2User > b.proximity2User) ? 1 : -1);
     },
+
+    getTime: function getTime(time: string): string {
+        // console.log(time);
+        const newTime = `${time.slice(11, 16)} (${time.slice(8,10)}/${time.slice(5,7)})`
+        return newTime
+    }
 
 
 }
