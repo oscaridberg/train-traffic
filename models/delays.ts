@@ -14,50 +14,38 @@ const delayModel = {
         return result.data;
     },
 
-    matchDelays2Stations: async function matchDelays2Stations() {
+    matchDelays2Stations: async function matchDelays2Stations(userData): array {
         const delays = await delayModel.getDelays();
         const stations = await delayModel.getStations();
 
         const matches = [];
-        // console.log(stations.data[2].Geometry.WGS84)
-        // console.log(delays.data[0]);
 
+        if (userData) {
+            for (let i = 0; i < stations.length; i++) {
 
+                for (let j = 0; j < delays.length; j++) {
+                    if (delays[j].FromLocation) {
+                        if (delays[j].FromLocation[0].LocationName === stations[i].LocationSignature) {
+                            matches.push({
+                                name: stations[i].AdvertisedLocationName,
+                                location: delayModel.getCoordinates(stations[i].Geometry.WGS84),
+                                advertised: delays[j].AdvertisedTimeAtLocation,
+                                expected: delays[j].EstimatedTimeAtLocation,
+                                isCanceled: delays[j].Canceled,
+                                destination: delayModel.getLocationName(stations, delays[j].ToLocation[0].LocationName),
+                                proximity2User: delayModel.getProximity(userData, delayModel.getCoordinates(stations[i].Geometry.WGS84))
+                            })
 
-        for (let i = 0; i < stations.length; i++) {
-
-            for (let j = 0; j < delays.length; j++) {
-                if (delays[j].FromLocation) {
-                    if (delays[j].FromLocation[0].LocationName === stations[i].LocationSignature) {
-                        matches.push({
-                            name: stations[i].AdvertisedLocationName,
-                            location: stations[i].Geometry.WGS84,
-                            advertised: delays[j].AdvertisedTimeAtLocation,
-                            expected: delays[j].EstimatedTimeAtLocation,
-                            isCanceled: delays[j].Canceled,
-                            destination: delayModel.getLocationName(stations, delays[j].ToLocation[0].LocationName)
-                        })
-
+                        }
                     }
                 }
-
-
             }
         }
-
-        console.log(matches);
-
-        // for (const station in stations) {
-        //     // console.log(station);
-        //
-        //     matches.push(station);
-        // }
-
-        return matches;
+        return delayModel.sortClosestStations(matches);
 
     },
 
-    getLocationName: function getLocationName(stations, stationCode) {
+    getLocationName: function getLocationName(stations, stationCode): string {
         let stationName;
 
         for (let i = 0; i < stations.length; i++) {
@@ -68,7 +56,48 @@ const delayModel = {
         }
 
         return stationName;
-    }
+    },
+
+    getCoordinates: function getCoordinates(data: string): array {
+
+        const coordinates = data.match(/[0-9.]+/g);
+
+        return coordinates;
+    },
+
+    getProximity: function getProximity(userData:object, stationData:array): float {
+        function degrees2Radius(deg) {
+            return deg * (Math.PI/180)
+        };
+
+        const lat1 = parseFloat(stationData[1]);
+        const lat2 = userData.latitude;
+
+        const lon1 = parseFloat(stationData[0]);
+        const lon2 = userData.longitude;
+
+        const R = 6371; //Radius of earth
+
+
+        const dLat = degrees2Radius(lat2 - lat1);
+        const dLon = degrees2Radius(lon2 - lon1);
+
+        const a =
+             Math.sin(dLat/2) * Math.sin(dLat/2) +
+             Math.cos(degrees2Radius(lat1)) * Math.cos(degrees2Radius(lat2)) *
+             Math.sin(dLon/2) * Math.sin(dLon/2)
+             ;
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        const proximity = R * c;
+
+        return proximity
+    },
+
+    sortClosestStations: function sortClosestStations(stations: array): array {
+        return stations.sort((a, b) => (a.proximity2User > b.proximity2User) ? 1 : -1);
+    },
 
 
 }
