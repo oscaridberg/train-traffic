@@ -1,4 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
+import { useState, useEffect } from 'react';
+
 import { Image, StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Base, Typography } from './styles/index.js';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -6,20 +8,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './components/Home.tsx';
-
+import AllDelays from './components/AllDelays.tsx';
 
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
   "Near you":      "map",
-  "Pick Order":     "list",
-  "Deliveries":     "cube",
-  "Login":          "key",
-  "Invoices":       "copy",
-  "Ship":           "map"
+  "All delays":     "list",
 };
 
 export default function App() {
+    const [delays, setDelays] = useState([]);
+    const [position, setPosition] = useState({});
+
+
   return (
     <View style={Base.base}>
       <NavigationContainer>
@@ -37,7 +39,11 @@ export default function App() {
           >
 
             <Tab.Screen name="Near you" >
-                {() => <Home/>}
+                {() => <Home delays={delays} setDelays={setDelays} position={position} setPosition={setPosition}/>}
+            </Tab.Screen>
+
+            <Tab.Screen name="All delays" >
+                {() => <AllDelays delays={delays} setDelays={setDelays} position={position} />}
             </Tab.Screen>
 
             </Tab.Navigator>

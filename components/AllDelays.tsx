@@ -6,16 +6,16 @@ import { useState, useEffect } from 'react';
 // import StockList from './Stock.tsx';
 import { Base, Typography } from '../styles';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SafeArea from './SafeArea.tsx';
 
 const Stack = createNativeStackNavigator();
 
 
-export default function Home({delays, setDelays, position, setPosition}){
-
+export default function AllDelays({delays, setDelays, position}){
     return (
-        <Stack.Navigator initialRouteName="Home" screenOptions={() => ({headerShown: false})}>
-            <Stack.Screen name="Map">
-                {() => <Map delays={delays} setDelays={setDelays} position={position} setPosition={setPosition}/>}
+        <Stack.Navigator initialRouteName="All Delays" screenOptions={() => ({headerShown: false})}>
+            <Stack.Screen name="Delays">
+                {() => <SafeArea delays={delays} setDelays={setDelays} position={position}/>}
             </Stack.Screen>
         </Stack.Navigator>
         );

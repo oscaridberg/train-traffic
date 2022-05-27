@@ -10,7 +10,11 @@ export const container = {
 };
 
 export const infoTitle = {
-    color: 'white'
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    paddingLeft: 4
 }
 
 export const nav = {
@@ -21,7 +25,6 @@ export const mapText = {
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     backgroundColor: '#121212',
-    // top: '50%',
     paddingTop: 25,
     paddingLeft: 10,
     paddingRight: 10
@@ -43,7 +46,8 @@ export const delayCard = {
     height: 85,
     flex: 1,
     flexDirection: 'row',
-    borderRadius: 12
+    borderRadius: 8,
+    alignItems: 'center'
 }
 
 export const delayList = {
@@ -63,7 +67,10 @@ export const delayViewHidden = {
 
 export const cardText = {
     color: 'white',
-    marginBottom: 5,
+    // marginBottom: 7,
+    paddingTop: 5,
+    paddingBottom: 5,
+
     fontWeight: 'bold'
     // width: '50%'
 }
@@ -82,11 +89,22 @@ export const newText = {
 }
 
 export const delayStation = {
-    width: '40%',
+    width: '35%',
+    flex: 1,
     justifyContent: 'center',
 }
 
 export const delayTime = {
-    width: '60%',
+    width: '55%',
     justifyContent: 'center'
+}
+
+export const delayImg = {
+    width: 22,
+    height: '80%',
+    marginRight: 10
+}
+
+export const safeArea = {
+    backgroundColor: '#121212',
 }

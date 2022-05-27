@@ -1,6 +1,6 @@
 import config from "../config/config.json";
 import { useState, useEffect } from 'react';
-import { ScrollView, Image, Text, View, StyleSheet } from 'react-native';
+import { ScrollView, Image, Text, View, StyleSheet, StatusBar } from 'react-native';
 import { Base, Typography } from '../styles/index.js';
 import MapView, { Marker } from 'react-native-maps';
 import getCoordinates from '../models/nominatim.ts';
@@ -8,12 +8,11 @@ import * as Location from 'expo-location';
 import delayModel from '../models/delays.ts';
 import DelayList from './DelayList.tsx';
 
-export default function Map():Object {
-    const [position, setPosition] = useState({});
+export default function Map({delays, setDelays, position, setPosition}):Object {
     const [isPress, setisPress] = useState(false);
-    const [delays, setDelays] = useState([]);
     const [marker, setMarker] = useState([]);
     const [locationMarker, setLocationMarker] = useState(null);
+
 
     useEffect(() => {
         const fetchPosition = async () => {
@@ -65,8 +64,13 @@ export default function Map():Object {
         }
 
     }, [delays]);
+
+    delayModel.sortClosestStations(delays);
+
     return (
         <View style={Base.container}>
+        <StatusBar barStyle = "light-content" hidden = {false} translucent = {true}/>
+
             <MapView
                 userInterfaceStyle={'dark'}
                 style={isPress? styles.mapFull : styles.map}
@@ -93,7 +97,7 @@ export default function Map():Object {
             </MapView>
 
             <View style={isPress? Base.delayViewHidden : Base.delayView}>
-                <DelayList delays={delays.slice(0,9)}/>
+                <DelayList delays={delays.slice(0,9)} setDelays={setDelays} position={position}/>
             </View>
         </View>
     );
