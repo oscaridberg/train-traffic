@@ -8,18 +8,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './components/Home.tsx';
-import AllDelays from './components/AllDelays.tsx';
+import Delays from './components/Delays.tsx';
 
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
   "Near you":      "map",
-  "All delays":     "list",
+  "All delays":     "time",
 };
 
 export default function App() {
     const [delays, setDelays] = useState([]);
     const [position, setPosition] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
 
 
   return (
@@ -43,7 +44,7 @@ export default function App() {
             </Tab.Screen>
 
             <Tab.Screen name="All delays" >
-                {() => <AllDelays delays={delays} setDelays={setDelays} position={position} />}
+                {() => <Delays delays={delays} setDelays={setDelays} position={position} />}
             </Tab.Screen>
 
             </Tab.Navigator>
