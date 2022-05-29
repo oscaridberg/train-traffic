@@ -46,7 +46,8 @@ const delayModel = {
             matchesNoDuplicate.push(value)
 
         }
-        return delayModel.sortClosestStations(matchesNoDuplicate);
+        // return delayModel.sortClosestStations(matchesNoDuplicate);
+        return matchesNoDuplicate
 
     },
 

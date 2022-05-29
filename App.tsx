@@ -9,12 +9,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './components/Home.tsx';
 import Delays from './components/Delays.tsx';
+import Auth from './components/auth/Auth.tsx';
+import Favorites from './components/auth/Favorites.tsx';
+import FlashMessage from 'react-native-flash-message';
+
 
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
-  "Near you":      "map",
+  "Near you":       "map",
   "All delays":     "time",
+  "Favorites":      "star",
+  "Login":          "key"
 };
 
 export default function App() {
@@ -47,10 +53,19 @@ export default function App() {
                 {() => <Delays delays={delays} setDelays={setDelays} position={position} />}
             </Tab.Screen>
 
+            {isLoggedIn ?
+                <Tab.Screen name="Favorites" component={Favorites} /> :
+                <Tab.Screen name="Login">
+                  {() => <Auth setIsLoggedIn={setIsLoggedIn}/>}
+                </Tab.Screen>
+            }
+
             </Tab.Navigator>
 
       </NavigationContainer>
       <StatusBar style="auto" />
+      <FlashMessage position="top" />
+
     </View>
   );
 }

@@ -1,3 +1,5 @@
 {
-    "base_url": "https://trafik.emilfolino.se/"
+    "base_url": "https://trafik.emilfolino.se/",
+    "api_key": "7000fac6d4834352f6ec7564c9e20a9a",
+    "auth_url": "https://auth.emilfolino.se"
 }

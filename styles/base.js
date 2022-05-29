@@ -108,3 +108,38 @@ export const delayImg = {
 export const safeArea = {
     backgroundColor: '#121212',
 }
+
+export const login = {
+    backgroundColor: "#81be7c",
+    width: '90%',
+    padding: 10,
+    borderRadius: 30,
+    marginBottom: 10,
+    top: '40%'
+
+}
+
+export const register = {
+    backgroundColor: "#121212",
+    borderWidth: 2,
+    borderColor: "#81be7c",
+    width: '90%',
+    padding: 10,
+    borderRadius: 30,
+    marginBottom: 10,
+    top: '40%'
+}
+
+export const button_text = {
+    textAlign: 'center',
+    color: 'white'
+}
+
+export const loginField = {
+    alignItems: 'center',
+    backgroundColor: '#121212',
+    paddingTop: 25,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: '100%'
+}
