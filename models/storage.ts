@@ -26,6 +26,25 @@ const storage = {
 
     deleteToken: async function deleteToken() {
         await AsyncStorage.removeItem('@token');
+    },
+
+    storeFavorites: async function storeFavorites(favorites) {
+        try {
+            await AsyncStorage.setItem(
+                'favorites', favorites
+            )
+        } catch (e) {
+            //save error
+        }
+    },
+
+    getFavorites: async function getFavorites() {
+        try {
+            const value = await AsyncStorage.getItem('favorites');
+            return value;
+        } catch (error) {
+            //save error
+        }
     }
 };
 

@@ -13,12 +13,17 @@ export default function Register({navigation, setIsLoggedIn}) {
         if (auth.email && auth.password) {
             const result = await AuthModel.register(auth.email, auth.password);
 
+            if (result.type === "success") {
+                setIsLoggedIn(true);
+            }
+            
             showMessage({
                 message: result.title,
                 description: result.message,
                 type: result.type,
 
             });
+
 
     } else {
         showMessage({

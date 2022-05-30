@@ -143,3 +143,39 @@ export const loginField = {
     paddingRight: 10,
     height: '100%'
 }
+
+export const loginTitle = {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    paddingLeft: 4,
+    width: '100%'
+}
+
+export const favoritesContainer = {
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    backgroundColor: '#121212',
+    paddingTop: 25,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: '100%'
+}
+
+export const favoritesTitle = {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    paddingLeft: 4,
+}
+
+export const favoritesButton = {
+    backgroundColor: "#81be7c",
+    width: '90%',
+    padding: 10,
+    borderRadius: 30,
+    marginBottom: 10,
+
+}

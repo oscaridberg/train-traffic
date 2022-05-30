@@ -4,7 +4,7 @@ import { Typography, Forms, Base } from '../../styles';
 export default function AuthFields({ auth, setAuth, title, submit, navigation }) {
     return (
         <View style={Base.loginField}>
-        <Text style={Base.infoTitle}>{title}</Text>
+        <Text style={Base.loginTitle}>{title}</Text>
 
             <Text style={Forms.inputLabel}>E-mail</Text>
             <TextInput

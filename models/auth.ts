@@ -60,7 +60,7 @@ const auth = {
             },
         });
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
 
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
             return {
@@ -69,7 +69,7 @@ const auth = {
                 type: "danger",
             }
         };
-
+        auth.login(email, password);
         return {
             title: "Register",
             message: result.data.message,
