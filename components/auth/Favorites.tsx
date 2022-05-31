@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-export default function Favorites ({delays, setDelays}): object {
+export default function Favorites ({delays, setDelays, navigation}): object {
     StatusBar.setBarStyle('light-content', true)
 
     return (
@@ -17,7 +17,7 @@ export default function Favorites ({delays, setDelays}): object {
             </Stack.Screen>
 
             <Stack.Screen name="AddFavorite">
-                {() => <AddFavorite />}
+                {(screenProps) => <AddFavorite {...screenProps} />}
             </Stack.Screen>
         </Stack.Navigator>
     )

@@ -5,13 +5,50 @@ const delayModel = {
     getStations: async function getStations(): Object {
         const response = await fetch (`${config.base_url}stations`);
         const result = await response.json();
-        return result.data;
+
+        return delayModel.sortStationsByName(result.data);
+    },
+
+    getStation: async function getStation(station) {
+        const stations = delayModel.getStations();
+        return stations;
     },
 
     getDelays: async function getDelays(): Object {
         const response = await fetch (`${config.base_url}delayed`);
         const result = await response.json();
         return result.data;
+    },
+
+    matchDelay2Station: async function matchDelay2Station(stations): array {
+        const delays = await delayModel.getDelays();
+        const stationData = await delayModel.getStations();
+
+
+        const matches = {};
+
+        for (let i = 0; i < stations.length; i++) {
+            for (let j = 0; j < delays.length; j++) {
+                if (delays[j].FromLocation) {
+                    if (delays[j].FromLocation[0].LocationName === stations[i].id) {
+                        matches[delays[j].AdvertisedTrainIdent] = {
+                            name: stations[i].name,
+                            advertised: delayModel.getTime(delays[j].AdvertisedTimeAtLocation),
+                            expected: delayModel.getTime(delays[j].EstimatedTimeAtLocation),
+                            destination: delayModel.getLocationName(stationData, delays[j].ToLocation[0].LocationName),
+                            trainID: delays[j].AdvertisedTrainIdent
+                        }
+                    }
+                }
+
+            }
+        }
+        const matchesNoDuplicate = [];
+        for (const [key, value] of Object.entries(matches)) {
+            matchesNoDuplicate.push(value)
+        }
+
+        return matchesNoDuplicate;
     },
 
     matchDelays2Stations: async function matchDelays2Stations(userData): array {
@@ -104,6 +141,10 @@ const delayModel = {
     sortClosestStations: function sortClosestStations(stations: array): array {
 
         return stations.sort((a, b) => (a.proximity2User > b.proximity2User) ? 1 : -1);
+    },
+
+    sortStationsByName: function sortStationsByName(stations: array): array {
+        return stations.sort((a, b) => (a.AdvertisedLocationName > b.AdvertisedLocationName) ? 1 : -1);
     },
 
     getTime: function getTime(time: string): string {

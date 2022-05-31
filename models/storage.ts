@@ -28,19 +28,40 @@ const storage = {
         await AsyncStorage.removeItem('@token');
     },
 
-    storeFavorites: async function storeFavorites(favorites) {
+    storeFavorites: async function storeFavorites(newFavorite) {
+        let data = await storage.getFavorites();
+
+        if (data === null) {
+            data = [];
+        } else {
+            data = JSON.parse(data);
+        }
+
+        const favorites = data.favorites;
+        console.log(favorites);
+
+        favorites.push(newFavorite);
+
         try {
-            await AsyncStorage.setItem(
-                'favorites', favorites
-            )
+            const jsonValue = JSON.stringify({favorites});
+            await AsyncStorage.setItem("@favorites", jsonValue)
         } catch (e) {
-            //save error
+            return {
+                message: 'Error',
+                description: e,
+                type: 'danger'
+            }
+        }
+        return {
+            message: 'Favorite added',
+            description: newFavorite.name,
+            type: 'success'
         }
     },
 
     getFavorites: async function getFavorites() {
         try {
-            const value = await AsyncStorage.getItem('favorites');
+            const value = await AsyncStorage.getItem('@favorites');
             return value;
         } catch (error) {
             //save error

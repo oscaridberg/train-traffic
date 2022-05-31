@@ -177,5 +177,65 @@ export const favoritesButton = {
     padding: 10,
     borderRadius: 30,
     marginBottom: 10,
+}
 
+export const favoriteCard = {
+    backgroundColor: '#2d2d2d',
+    // width: '95%',
+    marginBottom: 10,
+    padding: 10
+}
+
+export const favoriteCardTitle = {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'white',
+    marginBottom: 5
+}
+
+export const favoriteDetails = {
+    flex: 1,
+    backgroundColor: '#121212',
+    padding: 5,
+    marginBottom: 10,
+    // flexDirection: 'row',
+    // justifyContent: 'space-evenly',
+}
+
+export const favoriteDestination = {
+    width: '100%',
+    color: 'white',
+
+}
+
+export const favoriteTrainId = {
+    width: '100%',
+    color: 'white',
+    backgroundColor: '#2d2d2d'
+}
+
+export const timeTitle = {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10
+}
+
+export const favoriteTimeDelay = {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'red',
+    textDecorationLine: 'line-through',
+}
+
+export const favoriteTimeExpected = {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18
+}
+
+export const favoritesListContainer = {
+    width: '100%',
+    flex: 1,
 }
